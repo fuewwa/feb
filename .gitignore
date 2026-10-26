@@ -4,3 +4,8 @@
 *.a
 *.o
 *.exe
+
+# for other developers
+.vscode/
+*.diff
+*.patch
