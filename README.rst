@@ -53,7 +53,7 @@ Build and install feb
 .. code-block:: sh
 
     cargo install --path .
-    feb --version
+    feb --help
 
 The binary is placed in ``~/.cargo/bin`` (``%USERPROFILE%\.cargo\bin`` on Windows). Make sure that directory is in ``PATH``.
 
