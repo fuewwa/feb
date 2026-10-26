@@ -70,9 +70,11 @@ febconf
 
 .. code-block:: text
 
-    param = ProgFile // comment
+    param = "ProgFile" // comment
     count = 4
     ratio = 1.5
+    verbose = true
+    other = 'single quotes work too'
 
     run {
     	python3 ${param}.py
@@ -92,7 +94,8 @@ In the example above every command line starts with one real TAB character.
 
 Rules:
 
-- ``name = value`` defines a param. The value is an int, a double or a string. Strings may be quoted.
+- ``name = value`` defines a param. The value is a bool (``true`` or ``false``), an int, a double or a string.
+- A string must be written in double quotes or in single quotes. A string cannot contain the quote character it is written with.
 - ``// text`` starts a comment.
 - ``name { ... }`` defines a target.
 - Every command line inside a target must start with a TAB character, not spaces.

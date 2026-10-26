@@ -1,5 +1,8 @@
-name = app
-debug = Hello!
+name = "app"
+debug = "Hello!"
+verbose = true
+count = 3
+ratio = 1.5
 
 run {
 	python3 ${name}.py
@@ -7,4 +10,5 @@ run {
 
 dbug {
 	echo ${debug}
+	echo ${verbose} ${count} ${ratio}
 }
