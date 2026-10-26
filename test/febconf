@@ -1,0 +1,10 @@
+name = app
+debug = Hello!
+
+run {
+	python3 ${name}.py
+}
+
+dbug {
+	echo ${debug}
+}
