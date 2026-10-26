@@ -8,12 +8,11 @@ use std::process;
 const CONFIG_NAME: &str = "febconf";
 
 fn usage() {
-	println!("feb {} - fast & easy build", env!("CARGO_PKG_VERSION"));
+	println!("feb - fast & easy build");
 	println!();
 	println!("usage: feb [target ...]");
 	println!("       feb --list");
 	println!("       feb --help");
-	println!("       feb --version");
 	println!();
 	println!("without a target the first target in {} is built", CONFIG_NAME);
 }
@@ -30,11 +29,6 @@ fn main() {
 		usage();
 		return;
 	}
-	if args.iter().any(|a| a == "-V" || a == "--version") {
-		println!("feb {}", env!("CARGO_PKG_VERSION"));
-		return;
-	}
-
 	let text = match fs::read_to_string(CONFIG_NAME) {
 		Ok(text) => text,
 		Err(e) => fail(&format!("cannot read {}: {}", CONFIG_NAME, e)),
