@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>feb – fast &amp; easy build</title>
+	<meta name="description" content="feb is a small build tool. Write your steps in a febconf file and run them with one short command.">
+	<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232c46f0'/%3E%3Cpath d='M10 25V12m0 0V8h10M10 15h8' stroke='white' stroke-width='3' fill='none'/%3E%3C/svg%3E">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap">
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<header class="top">
+		<a class="mark" href="#top">feb</a>
+		<nav>
+			<a href="#syntax">Syntax</a>
+			<a href="#usage">Usage</a>
+			<a href="#install">Install</a>
+			<a href="https://github.com/fuewwa/feb">GitHub</a>
+		</nav>
+	</header>
+
+	<main id="top">
+		<section class="hero">
+			<div class="lead">
+				<h1>feb</h1>
+				<p class="tag">fast &amp; easy build</p>
+				<p class="intro">Write your build steps once in a file called <code>febconf</code>. Run any of them with one short command. feb is a small alternative to GNU Make with no dependencies, written in Rust.</p>
+				<p class="actions">
+					<a class="btn" href="#install">Install feb</a>
+					<a class="btn plain" href="#syntax">Read the syntax</a>
+				</p>
+			</div>
+			<figure class="file">
+				<figcaption><span>febconf</span><span>Pink bars are TAB characters</span></figcaption>
+<pre><span class="p">name</span> = <span class="s">"app"</span> <span class="c">// strings need quotes</span>
+<span class="p">opt</span> = <span class="n">2</span>
+
+<span class="k">run</span> {
+<span class="t">	</span>python3 ${name}.py
+}
+
+<span class="k">cppver</span> {
+<span class="t">	</span>mkdir -p build
+<span class="t">	</span>g++ -std=c++17 -O${opt} -c main.cpp -o build/main.o
+<span class="t">	</span>g++ -o build/main build/main.o
+}
+
+<span class="k">clear</span> {
+<span class="t">	</span>rm -rf build
+}
+</pre>
+			</figure>
+		</section>
+
+		<section id="syntax">
+			<h2>Syntax</h2>
+			<p class="sub">A febconf has two kinds of entries: params and targets.</p>
+			<dl>
+				<dt><code>name = value</code></dt>
+				<dd>Defines a param. Names may contain letters, digits, <code>_</code> and <code>-</code>.</dd>
+				<dt><code>true</code> <code>false</code></dt>
+				<dd>A bool, always in lowercase.</dd>
+				<dt><code>42</code> <code>1.5</code></dt>
+				<dd>An int and a double.</dd>
+				<dt><code>"text"</code> <code>'text'</code></dt>
+				<dd>A string. It must be in double or single quotes, so a string is never mistaken for a bool or a number. It cannot contain its own quote character.</dd>
+				<dt><code>${name}</code></dt>
+				<dd>Inserts a param into a command.</dd>
+				<dt><code>// text</code></dt>
+				<dd>A comment. Quoted text is left alone, so <code>"http://example.com"</code> is safe.</dd>
+				<dt><code>name { … }</code></dt>
+				<dd>Defines a target: a list of commands, one per line.</dd>
+				<dt>TAB</dt>
+				<dd>Every command line starts with one real TAB character. Spaces are rejected, and the error names the line.</dd>
+			</dl>
+			<p class="note">Commands run in order through <code>sh -c</code>, or <code>cmd /C</code> on Windows. The first command that fails stops the build.</p>
+		</section>
+
+		<section id="usage">
+			<h2>Usage</h2>
+			<p class="sub">feb reads the febconf in the current folder.</p>
+			<div class="rows">
+				<div>
+<pre><span class="d">$</span> feb run
+<span class="d">$</span> feb cppver clear</pre>
+					<p>Run one target, or several in the order you list them. Every name is checked before anything starts.</p>
+				</div>
+				<div>
+<pre><span class="d">$</span> feb</pre>
+					<p>Run the first target in the file.</p>
+				</div>
+				<div>
+<pre><span class="d">$</span> feb --list</pre>
+					<p>Print the names of all targets.</p>
+				</div>
+			</div>
+		</section>
+
+		<section id="install">
+			<h2>Install</h2>
+			<p class="sub">feb is built with cargo. Install the Rust toolchain for your system first.</p>
+			<div class="grid">
+				<div>
+					<h3>Arch Linux</h3>
+<pre>sudo pacman -S --needed base-devel git rust</pre>
+				</div>
+				<div>
+					<h3>Debian and Ubuntu</h3>
+<pre>sudo apt update
+sudo apt install -y build-essential curl git
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+. "$HOME/.cargo/env"</pre>
+				</div>
+				<div>
+					<h3>macOS</h3>
+<pre>xcode-select --install
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+. "$HOME/.cargo/env"</pre>
+				</div>
+				<div>
+					<h3>Windows</h3>
+					<p>Install the Visual Studio Build Tools with the “Desktop development with C++” workload, then run this in PowerShell and restart the terminal.</p>
+<pre>winget install Rustlang.Rustup
+rustup default stable</pre>
+				</div>
+			</div>
+			<h3 class="build">Then build feb</h3>
+<pre><span class="d">$</span> git clone https://github.com/fuewwa/feb
+<span class="d">$</span> cd feb
+<span class="d">$</span> cargo install --path .
+<span class="d">$</span> feb --help</pre>
+			<p class="note">The binary goes to <code>~/.cargo/bin</code>. If your shell says the command is not found, add that folder to your <code>PATH</code>.</p>
+		</section>
+	</main>
+
+	<footer>
+		<span>feb is free software under the GNU GPL 3.0.</span>
+		<a href="https://github.com/fuewwa/feb">Source on GitHub</a>
+	</footer>
+</body>
+</html>
