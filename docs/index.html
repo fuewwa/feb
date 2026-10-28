@@ -73,6 +73,12 @@
 				<dd>A comment. Quoted text is left alone, so <code>"http://example.com"</code> is safe.</dd>
 				<dt><code>name { … }</code></dt>
 				<dd>Defines a target: a list of commands, one per line.</dd>
+				<dt><code>if a == b:</code> <code>else</code> <code>fi</code></dt>
+				<dd>Runs commands only when a condition holds. Each side is a param or a value. <code>else</code> is optional and conditions can be nested. Lines inside a branch need one more TAB than the <code>if</code> line.</dd>
+				<dt><code>==</code> <code>!=</code></dt>
+				<dd>Equal and not equal. Both sides must have the same type. An int and a double are compared as numbers.</dd>
+				<dt><code>&gt;=</code> <code>&lt;=</code> <code>&gt;!</code> <code>&lt;!</code></dt>
+				<dd>Greater, less, greater or equal and less or equal. They work only with numbers. Note that <code>&gt;=</code> and <code>&lt;=</code> do not include equality.</dd>
 				<dt>TAB</dt>
 				<dd>Every command line starts with one real TAB character. Spaces are rejected, and the error names the line.</dd>
 			</dl>

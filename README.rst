@@ -102,6 +102,28 @@ Rules:
 - A param is inserted into a command with ``${name}``.
 - Commands run in order through ``sh -c`` (``cmd /C`` on Windows). The first failing command stops the build.
 
+Conditions
+~~~~~~~~~~
+
+.. code-block:: text
+
+    lang = "cpp"
+
+    build {
+    	g++ main.cpp -o prog
+    	if lang == "py":
+    		echo "Python"
+    	else
+    		echo "C++"
+    	fi
+    }
+
+- ``if left op right:`` starts a condition. Each side is a param name or a value.
+- ``else`` is optional. ``fi`` ends the condition.
+- Lines inside a branch start with one more TAB than the ``if`` line. Conditions can be nested.
+- ``==`` is equal and ``!=`` is not equal. Both sides must have the same type, except that an int and a double are compared as numbers.
+- ``>=`` is greater, ``<=`` is less, ``>!`` is greater or equal and ``<!`` is less or equal. These four work only with numbers. Note that ``>=`` and ``<=`` do not include equality.
+
 Usage
 -----
 

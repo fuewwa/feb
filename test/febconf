@@ -3,6 +3,8 @@ debug = "Hello!"
 verbose = true
 count = 3
 ratio = 1.5
+lang = "cpp"
+level = 3
 
 run {
 	python3 ${name}.py
@@ -11,4 +13,18 @@ run {
 dbug {
 	echo ${debug}
 	echo ${verbose} ${count} ${ratio}
+}
+
+cond {
+	if lang == "py":
+		echo Python
+	else
+		echo Cpp
+	fi
+	if level >= 2:
+		echo level is greater than 2
+	fi
+	if level >! 3:
+		echo level is at least 3
+	fi
 }
