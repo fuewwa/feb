@@ -1,0 +1,15 @@
+name: update-flake-lock
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 4 * * 1"
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/nix-installer-action@main
+      - uses: DeterminateSystems/update-flake-lock@main
